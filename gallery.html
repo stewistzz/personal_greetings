@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💜 Gallery Cinta & Kenangan 💜</title>
+  <style>
+    /* Reset dasar */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    h2 {
+      text-align: center;
+      padding: 40px 20px;
+      color: #6a0572;
+      font-size: 2.5rem;
+      font-family: 'Great Vibes', cursive;
+      animation: fadeInDown 2s ease;
+    }
+
+    /* Timeline container */
+    .timeline {
+      position: relative;
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    /* Garis tengah timeline */
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      background: #9b59b6;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -3px;
+    }
+
+    /* Kontainer node */
+    .timeline-item {
+      padding: 20px 40px;
+      position: relative;
+      width: 50%;
+      animation: fadeInUp 1.5s ease;
+    }
+
+    /* Posisi kiri */
+    .timeline-item.left {
+      left: 0;
+    }
+
+    /* Posisi kanan */
+    .timeline-item.right {
+      left: 50%;
+    }
+
+    /* Kotak konten */
+    .content {
+      padding: 20px;
+      background: white;
+      position: relative;
+      border-radius: 20px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .content:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Gambar */
+    .content img {
+      max-width: 100%;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      color: #8e44ad;
+      margin-bottom: 10px;
+    }
+
+    .hope {
+      padding: 20px;
+      margin: auto;
+      width: 90%
+    }
+
+    /* Titik lingkaran */
+    .timeline-item::before {
+      content: '❤';
+      position: absolute;
+      font-size: 24px;
+      color: #e84393;
+      top: 30px;
+    }
+
+    .timeline-item.left::before {
+      right: -25px;
+    }
+
+    .timeline-item.right::before {
+      left: -25px;
+    }
+
+    /* Animasi */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsif */
+    @media screen and (max-width: 768px) {
+      .timeline::after {
+        left: 31px;
+      }
+
+      .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+      }
+
+      .timeline-item.right {
+        left: 0%;
+      }
+
+      .timeline-item::before {
+        left: 15px;
+      }
+    }
+
+    /* Audio controller */
+    .audio-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      padding: 10px 15px;
+      border-radius: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -50px;
+      color: #ff4d6d;
+      font-size: 20px;
+      animation: floatUp 6s infinite ease-in;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* animasi romantic */
+    /* Efek animasi masuk */
+    .animate-fade {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Styling gambar biar lebih romantis */
+    .romantic-img {
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(106, 5, 114, 0.3);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .romantic-img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 28px rgba(106, 5, 114, 0.5);
+    }
+
+    /* Modal Style */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    /* Konten modal */
+    .modal-content {
+      position: relative;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 80%;
+      margin-top: 50px;
+    }
+
+    /* Gambar slide */
+    .slides1,
+    .slides2,
+    .slides3,
+    .slides4 {
+      display: none;
+      text-align: center;
+    }
+
+    .slides1 img,
+    .slides2 img,
+    .slides3 img,
+    .slides4 img {
+      width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    /* Tombol navigasi */
+    .prev,
+    .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      padding: 16px;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      user-select: none;
+      transition: 0.3s;
+    }
+
+    .next {
+      right: 0;
+    }
+
+    .prev {
+      left: 0;
+    }
+
+    .prev:hover,
+    .next:hover {
+      color: #d63384;
+    }
+
+    /* Tombol close */
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #d63384;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <h2>💜 Perjalanan Cinta & Kenangan Indah 💜</h2>
+
+  <div class="timeline">
+    <!-- Node 1 -->
+    <!-- Timeline Item -->
+    <div class="timeline-item left animate-fade">
+      <div class="content">
+        <!-- Gambar utama yang tampil -->
+        <img src="waduk02.jpg" alt="Gambar 1" class="romantic-img" onclick="openModal('myModal1')">
+        <h3>🌸 Awal Perjalanan</h3>
+        <p>
+          Semua berawal dari satu pertemuan sederhana yang ternyata mampu mengubah banyak hal dalam hidupku.
+          Dari tatap pertama, aku merasakan ada sesuatu yang berbeda—sebuah rasa hangat yang tumbuh perlahan
+          dan semakin mengisi ruang hati.
+        </p>
+      </div>
+    </div>
+
+    <!-- Popup Modal Gallery -->
+    <div id="myModal1" class="modal">
+      <span class="close" onclick="closeModal('myModal1')">&times;</span>
+      <div class="modal-content">
+        <div class="slides1">
+          <img src="waduk.jpg" alt="Gambar 1">
+        </div>
+        <div class="slides1">
+          <img src="waduk02.jpg" alt="Gambar 2">
+        </div>
+        <div class="slides1">
+          <img src="vc-laptop1.jpg" alt="Gambar 3">
+        </div>
+        <a class="prev" onclick="plusSlides(-1, 'slides1')">&#10094;</a>
+        <a class="next" onclick="plusSlides(1, 'slides1')">&#10095;</a>
+      </div>
+    </div>
+
+    <!-- node 2 -->
+    <!-- Timeline Item -->
+    <div class="timeline-item right animate-fade">
+      <div class="content">
+        <!-- Gambar utama yang tampil -->
+        <img src="rampal.jpg" alt="Gambar 1" class="romantic-img" onclick="openModal('myModal2')">
+        <h3>💕 Semakin Dekat</h3>
+        <p>
+          Seiring waktu, jarak yang tadinya asing mulai memudar. Kita saling mengenal lebih dalam, berbagi cerita, tawa,
+          bahkan diam yang tetap terasa nyaman. Dari hari ke hari, aku semakin yakin bahwa kamu adalah bagian penting
+          dari hidupku.
+        </p>
+      </div>
+    </div>
+
+    <!-- Popup Modal Gallery -->
+    <!-- Modal 2 -->
+    <div id="myModal2" class="modal">
+      <span class="close" onclick="closeModal('myModal2')">&times;</span>
+      <div class="modal-content">
+        <div class="slides2">
+          <img src="rampal2.jpg" alt="Gambar 1">
+        </div>
+        <div class="slides2">
+          <img src="rampal.jpg" alt="Gambar 1">
+        </div>
+        <a class="prev" onclick="plusSlides(-1, 'slides2')">&#10094;</a>
+        <a class="next" onclick="plusSlides(1, 'slides2')">&#10095;</a>
+      </div>
+    </div>
+
+
+    <!-- node 3 -->
+
+    <!-- Timeline Item -->
+    <div class="timeline-item left animate-fade">
+      <div class="content">
+        <!-- Gambar utama yang tampil -->
+        <img src="explore.jpg" alt="Gambar 1" class="romantic-img" onclick="openModal('myModal3')">
+        <h3>✈️ Explore Bersama</h3>
+        <p>
+          Banyak hal baru yang kita temukan saat bersama—perjalanan kecil, momen sederhana, dan kenangan indah yang
+          tercipta setiap kali kita melangkah berdua. Kamu membuat dunia terasa lebih luas, lebih berwarna, dan lebih
+          berarti.
+        </p>
+      </div>
+    </div>
+
+    <!-- Popup Modal Gallery -->
+    <div id="myModal3" class="modal">
+      <span class="close" onclick="closeModal('myModal3')">&times;</span>
+      <div class="modal-content">
+        <div class="slides3">
+          <img src="gumul2.jpg" alt="Gambar 1">
+        </div>
+        <div class="slides3">
+          <img src="gumul3.jpg" alt="Gambar 2">
+        </div>
+        <div class="slides3">
+          <img src="gumul4.jpg" alt="Gambar 3">
+        </div>
+        <div class="slides3">
+          <img src="koceh1.jpg" alt="Gambar 4">
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1, 'slides3')">&#10094;</a>
+        <a class="next" onclick="plusSlides(1, 'slides3')">&#10095;</a>
+      </div>
+    </div>
+
+
+    <!-- node 4 -->
+
+    <!-- Timeline Item -->
+    <div class="timeline-item right animate-fade">
+      <div class="content">
+        <!-- Gambar utama yang tampil -->
+        <img src="studio1.jpg" alt="Gambar 1" class="romantic-img" onclick="openModal('myModal4')">
+        <h3>🌱 Menemukan Kita yang Baru</h3>
+        <p>
+          Bersamamu, aku belajar menjadi versi terbaik dari diriku. Kita saling melengkapi, saling menguatkan, dan
+          bersama-sama tumbuh menjadi pribadi yang lebih dewasa. Aku menemukan diriku, dan aku juga menemukan ‘kita’—dua
+          jiwa yang berjalan selaras.
+        </p>
+      </div>
+    </div>
+
+    <!-- Popup Modal Gallery -->
+    <div id="myModal4" class="modal">
+      <span class="close" onclick="closeModal('myModal4')">&times;</span>
+      <div class="modal-content">
+        <div class="slides4">
+          <img src="studio2.jpg" alt="Gambar 1">
+        </div>
+        <div class="slides4">
+          <img src="studio3.jpg" alt="Gambar 2">
+        </div>
+        <div class="slides4">
+          <img src="studio4.jpg" alt="Gambar 3">
+        </div>
+        <div class="slides4">
+          <img src="studio5.jpg" alt="Gambar 4">
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1, 'slides4')">&#10094;</a>
+        <a class="next" onclick="plusSlides(1, 'slides4')">&#10095;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Node 4 -->
+  <div class="hope">
+    <div class="content">
+      <!-- <img src="toa-heftiba-bwrOTZUUuME-unsplash.jpg" alt="Gambar 4"> -->
+      <h3>💍 Pesan & Harapan</h3>
+      <p>Perjalanan ini baru awal. Dari setiap langkah yang kita lalui, aku percaya bahwa masa depan kita akan semakin
+        indah. Aku ingin kita tetap saling menjaga, mencintai, dan bertumbuh bersama. Dan beberapa tahun dari sekarang—4
+        atau 5 tahun ke depan—aku ingin kita menepati janji itu: <strong>melangkah menuju ikatan suci pernikahan, dan
+          menjadikan semua doa ini nyata.</strong></p>
+    </div>
+  </div>
+
+  <!-- Musik Latar -->
+  <div class="audio-player">
+    <audio id="bg-music" autoplay loop>
+      <source src="Jaz - Bersamamu (Official Lyric Video).mp3" type="audio/mpeg">
+      Browser Anda tidak mendukung audio.
+    </audio>
+  </div>
+
+  <script>
+    // Autoplay musik (dengan fallback interaksi user)
+    const bgMusic = document.getElementById("bg-music");
+    bgMusic.play().catch(() => {
+      document.body.addEventListener("click", () => {
+        bgMusic.play();
+      }, { once: true });
+    });
+
+    // Scroll otomatis ke bawah lalu kembali ke atas
+    function autoScroll() {
+      window.scrollBy({ top: 1, behavior: "smooth" });
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 2000);
+      }
+    }
+    setInterval(autoScroll, 50);
+
+    // Floating hearts animation
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.innerHTML = "❤";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 800);
+  </script>
+
+  <!-- modal -->
+  <!-- <script>
+    let slideIndex = 1;
+
+    function openModal() {
+      document.getElementById("myModal").style.display = "block";
+      showSlides(slideIndex);
+    }
+
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function showSlides(n) {
+      let slides = document.getElementsByClassName("slides");
+      if (n > slides.length) { slideIndex = 1 }
+      if (n < 1) { slideIndex = slides.length }
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slides[slideIndex - 1].style.display = "block";
+    }
+  </script> -->
+
+
+  <script>
+    // Simpan index slide untuk tiap modal
+    let slideIndices = {};
+
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = "block";
+
+      // Ambil class slides berdasarkan modal
+      let slidesClass = "slides" + modalId.replace("myModal", "");
+      if (!slideIndices[slidesClass]) {
+        slideIndices[slidesClass] = 1;
+      }
+      showSlides(slideIndices[slidesClass], slidesClass);
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
+    }
+
+    function plusSlides(n, slidesClass) {
+      slideIndices[slidesClass] += n;
+      showSlides(slideIndices[slidesClass], slidesClass);
+    }
+
+    function showSlides(n, slidesClass) {
+      let slides = document.getElementsByClassName(slidesClass);
+      if (slides.length === 0) return;
+
+      if (n > slides.length) { slideIndices[slidesClass] = 1 }
+      if (n < 1) { slideIndices[slidesClass] = slides.length }
+
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+
+      slides[slideIndices[slidesClass] - 1].style.display = "block";
+    }
+  </script>
+
+</body>
+
+</html>
